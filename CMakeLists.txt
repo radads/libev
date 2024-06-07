@@ -14,5 +14,13 @@ include_directories(${PROJECT_SOURCE_DIR})
 set(LIBEV_SOURCES "ev.c;event.c")
 
 add_library(ev_static STATIC ${LIBEV_SOURCES})
+if (WIN32)
+target_link_libraries(ev_static ws2_32)
+endif ()
+
 add_library(ev SHARED ${LIBEV_SOURCES})
+if (WIN32)
+target_link_libraries(ev ws2_32)
+endif ()
+
 target_include_directories (ev PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
